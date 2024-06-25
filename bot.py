@@ -2,6 +2,8 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from pymongo import MongoClient
 import logging
+import asyncio
+import os
 
 TOKEN = '1711796263:AAHcPj81am_FfS9v7QJfHdrLugEzJoDE-WM'
 
@@ -32,7 +34,7 @@ async def join(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f'You have joined the game with ID: {game["_id"]}.')
         if len(game['players']) + 1 == 4:
             games_collection.update_one({'_id': game['_id']}, {'$set': {'status': 'ongoing'}})
-            # Notify all players that the game is starting
+            
 
 async def win(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.message.from_user.id
@@ -41,14 +43,31 @@ async def win(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     users_collection.update_one({'user_id': user_id}, {'$inc': {'points': 10}})
     await update.message.reply_text(f'Congratulations! You won the game {game_id}. You earned 10 points.')
 
-def main():
+async def run_bot():
     application = ApplicationBuilder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("join", join))
     application.add_handler(CommandHandler("win", win))
 
-    application.run_polling()
+    await application.initialize()
+    await application.start()
+    await application.updater.start_polling()
+    await application.updater.idle()
+
+async def main():
+    max_retries = 5
+    for i in range(max_retries):
+        try:
+            await run_bot()
+            break
+        except Exception as e:
+            logging.error(f'Error occurred: {e}')
+            if i < max_retries - 1:
+                logging.info(f'Retrying... ({i+1}/{max_retries})')
+                await asyncio.sleep(5) 
+            else:
+                logging.error('Max retries reached. Exiting.')
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())

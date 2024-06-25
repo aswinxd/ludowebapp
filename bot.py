@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from pymongo import MongoClient
 import logging
 
-TOKEN = '1711796263:AAHzaZn9EJFSywo4tF5v9A-2BI05JxeZ15A'
+TOKEN = '1711796263:AAHcPj81am_FfS9v7QJfHdrLugEzJoDE-WM'
 
 client = MongoClient('mongodb+srv://test:test@cluster0.q9llhnj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 db = client['ludo_game']

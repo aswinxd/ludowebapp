@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ludo Game</title>
+</head>
+<body>
+    <h1>Ludo Game</h1>
+    <div id="game"></div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.min.js"></script>
+    <script>
+        var socket = io();
+
+        socket.emit('join', {'room': 'room1', 'username': 'Player1'});
+
+        socket.on('message', function(msg) {
+            var gameDiv = document.getElementById('game');
+            gameDiv.innerHTML += '<p>' + msg + '</p>';
+        });
+    </script>
+</body>
+</html>

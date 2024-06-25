@@ -52,22 +52,6 @@ async def run_bot():
 
     await application.initialize()
     await application.start()
-    await application.updater.start_polling()
-    await application.updater.idle()
-
-async def main():
-    max_retries = 5
-    for i in range(max_retries):
-        try:
-            await run_bot()
-            break
-        except Exception as e:
-            logging.error(f'Error occurred: {e}')
-            if i < max_retries - 1:
-                logging.info(f'Retrying... ({i+1}/{max_retries})')
-                await asyncio.sleep(5) 
-            else:
-                logging.error('Max retries reached. Exiting.')
 
 if __name__ == '__main__':
     asyncio.run(main())

@@ -2,9 +2,9 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from pymongo import MongoClient
 
-TOKEN = 'YOUR_BOT_TOKEN'
+TOKEN = '1711796263:AAHzaZn9EJFSywo4tF5v9A-2BI05JxeZ15A'
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://test:test@cluster0.q9llhnj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 db = client['ludo_game']
 users_collection = db['users']
 games_collection = db['games']

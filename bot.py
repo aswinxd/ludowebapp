@@ -5,7 +5,7 @@ import logging
 import asyncio
 import os
 
-TOKEN = '1711796263:AAHcPj81am_FfS9v7QJfHdrLugEzJoDE-WM'
+TOKEN = '7057474043:AAEXL5Up5MpjTh1kyCVSS4WZpzwhGI5xRp4'
 
 client = MongoClient('mongodb+srv://test:test@cluster0.q9llhnj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 db = client['ludo_game']
